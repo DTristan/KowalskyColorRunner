@@ -13,6 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.colorLock = False
         self.game = game
         self.image = pygame.Surface((32, 56))
+        #SWITCH TO RESOURCES
         texture = pygame.image.load("assets/kowalsky.png").convert_alpha()
         self.spritesheet = Spritesheet(texture)
         self.current_frame = 0
@@ -38,9 +39,10 @@ class Player(pygame.sprite.Sprite):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_c]:
             if not self.colorLock :
-                self.colorIndex += 1
+                self.colorIndex = (self.colorIndex +1) % len(self.colors)
+                """self.colorIndex += 1
                 if self.colorIndex > 2:
-                    self.colorIndex = 0
+                    self.colorIndex = 0"""
             self.colorLock = True
         else : 
             self.colorLock = False
@@ -78,7 +80,7 @@ class Player(pygame.sprite.Sprite):
         
         if self.onGround : 
             self.rect.y -= 1
-            self.vel.y = -18
+            self.vel.y = -15
 
 class Platform(pygame.sprite.Sprite):
     
