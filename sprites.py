@@ -25,7 +25,7 @@ class Player(pygame.sprite.Sprite):
         self.vel = Vector2(0, 0)
         self.acc = Vector2(0, 0)
         self.onGround = False
-        self.colors = [BLUE, RED, GREEN]
+        self.colors = self.game.colors
         self.colorIndex = 0
         self.color = self.colors[self.colorIndex]
         

@@ -13,12 +13,13 @@ from tkinter import *
 
 class Game:
 
-    def __init__(self,width,height,fs,white):
+    def __init__(self,width,height,fs,white,colors):
 
         self.width = width
         self.height = height
         self.white_platforms = white
         self.resolution = (self.width,self.height)
+        self.colors = colors
 
         pygame.init()
         pygame.mixer.init()
@@ -141,9 +142,9 @@ class Game:
                                         len(self.platforms.sprites()) - 1]).right
         if (len(self.platforms.sprites()) < 7):
             if self.white_platforms : 
-                color = random.choice([RED, GREEN, BLUE, WHITE])
+                color = random.choice(self.colors + [WHITE])
             else :
-                color = random.choice([RED, GREEN, BLUE])
+                color = random.choice(self.colors)
             width = randrange(200, 600) + (self.gamespeed * 50)
             yoffset = choice([-48, 0, 48])
             item = randrange(0, 10)
@@ -226,16 +227,23 @@ class Game:
 
 class SettingsFrame():
 
+    def hex_to_rgb(self,hex):
+
+        hex = hex.lstrip('#')
+        lv = len(hex)
+        return tuple(int(hex[i:i + lv // 3], 16) for i in range(0, lv, lv // 3))
+
     def launch_game(self):
         self.win.destroy()
         colors = []
-        if self.color1 :
-            print(self.color1text.get())
-        if self.color2 :
-            print(self.color2text.get())
-        if self.color3 :
-            print(self.color3text.get())
-        game = Game(int(self.width.get()),int(self.height.get()),self.fs.get(),self.white.get())
+        print(self.color1.get(),",",self.color2.get(),",",self.color3.get())
+        if self.color1.get() :
+            colors.append(self.hex_to_rgb(self.color1text.get()))
+        if self.color2.get() :
+            colors.append(self.hex_to_rgb(self.color2text.get()))
+        if self.color3.get() :
+            colors.append(self.hex_to_rgb(self.color3text.get()))
+        game = Game(int(self.width.get()),int(self.height.get()),self.fs.get(),self.white.get(),colors)
         
         
 
